@@ -6,7 +6,8 @@ class Carrier :
 	public WaterVehicle
 {
 private:
-	int length = 5;
+	int _length = 5;
+
 
 public:
 

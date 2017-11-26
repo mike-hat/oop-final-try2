@@ -160,6 +160,9 @@
     <ClInclude Include="Submarine.h" />
     <ClInclude Include="WaterVehicle.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ship_placement.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

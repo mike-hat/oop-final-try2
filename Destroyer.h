@@ -6,7 +6,7 @@ class Destroyer :
 	public WaterVehicle
 {
 private:
-	int length = 2;
+	int _length = 2;
 
 public:
 	Destroyer();

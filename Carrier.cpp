@@ -4,6 +4,7 @@
 
 Carrier::Carrier()
 {
+	setLength(_length);
 }
 
 
