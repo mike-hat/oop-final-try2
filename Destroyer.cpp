@@ -4,6 +4,7 @@
 
 Destroyer::Destroyer()
 {
+	setLength(_length);
 }
 
 

@@ -4,6 +4,7 @@
 
 Submarine::Submarine()
 {
+	setLength(_length);
 }
 
 

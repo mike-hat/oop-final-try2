@@ -6,7 +6,7 @@ class Submarine :
 	public WaterVehicle
 {
 private:
-	int length = 3;
+	int _length = 3;
 
 public:
 	Submarine();

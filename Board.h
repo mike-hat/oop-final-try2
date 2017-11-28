@@ -28,7 +28,7 @@ private:
 	Battleship userBattleship, computerBattleship;
 	Cruiser userCruiser, computerCruser;
 	Submarine userSubmarine, computerSubmarine;
-	Destroyer userdestroyer, computerDestroyer;
+	Destroyer userDestroyer, computerDestroyer;
 
 	//static int grid[10][10];
 	vector <vector<char> > userGrid;
@@ -41,7 +41,7 @@ private:
 	char ship = 'S';
 
 	//for loop to insert into the grid
-	void verticalShipPlacementForLoop(string location, char orientation);
+	void verticalShipPlacementForLoop(vector<int> location, char orientation, int shipLength);
 
 public:
 	Board();
@@ -61,6 +61,8 @@ public:
 	//verify the location input is between a-j, and 1-10
 	string verifyLocationInput(string _location);
 
+	vector<int> changeLocationToInts(string _location);
+
 
 	//verify the orientation input is 'v' or 'h'
 	char verifyOrientationInput(char _orientation);
@@ -70,7 +72,7 @@ public:
 	void displayGrid();
 
 	//test if ships can be placed where requested
-	bool placeable(int _col, char _row, char _orientation);
+	bool placeable(vector<int> location, int shipLength, char orientation);
 
 	~Board();
 };

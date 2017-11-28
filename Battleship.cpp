@@ -4,6 +4,7 @@
 
 Battleship::Battleship()
 {
+	setLength(_length);
 }
 
 

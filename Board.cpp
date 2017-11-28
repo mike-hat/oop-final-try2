@@ -16,6 +16,7 @@ void Board::placeUserShips()
 	char orientation;//ship orientation variable
 	int column;//used within switch
 	char row;//used within switch
+	vector<int> locationAsInts;
 
 	string coordinateInput, coordinate;
 
@@ -31,9 +32,14 @@ void Board::placeUserShips()
 	cout << "\nEnter a letter/number coordinate from the grid below to place you Carrier (ex: b4\n";
 	cout << "Enter \'q\' to quit\n\n";
 	cin >> coordinateInput;
+
+
 	coordinate = getLocationLetterNumber(coordinateInput);
 	cout << "\n\n coordinate = " << coordinate << endl << endl;
-	coordinate = verifyLocationInput(coordinateInput);
+
+	coordinate = verifyLocationInput(coordinate);
+	cout << "\n\ncoordinate after exiting verifyCoordinateInput() = " << coordinate << "\n\n";
+
 
 	columns = coordinate.at(0);
 	row = coordinate.at(1);
@@ -46,8 +52,14 @@ void Board::placeUserShips()
 	orientation = toupper(orientation);
 	orientation = verifyOrientationInput(orientation);
 
+	locationAsInts = changeLocationToInts(coordinate);
 
-	verticalShipPlacementForLoop(coordinate, orientation);
+	placeable(locationAsInts, userCarrier.getLength(), orientation);
+	//placeable(vector<int> location, int shipLength, char orientation)
+	cout << "l;aksjdfl;ajfd;lajfd";
+
+	verticalShipPlacementForLoop(locationAsInts, orientation, userCarrier.getLength());
+
 
 	/*switch (columns)
 	{
@@ -100,6 +112,158 @@ void Board::placeUserShips()
 	
 	 
 //!carrier input
+
+
+
+//Battleship input
+	cout << "\nEnter a letter/number coordinate from the grid below to place you Battleship (ex: b4\n";
+	cout << "Enter \'q\' to quit\n\n";
+	cin >> coordinateInput;
+
+
+	coordinate = getLocationLetterNumber(coordinateInput);
+	cout << "\n\n coordinate = " << coordinate << endl << endl;
+
+	coordinate = verifyLocationInput(coordinate);
+	cout << "\n\ncoordinate after exiting verifyCoordinateInput() = " << coordinate << "\n\n";
+
+
+	columns = coordinate.at(0);
+	row = coordinate.at(1);
+
+
+
+	cout << "Enter the Carrier's Orientation\n"
+		<< "\'v\' for vertical or \'h\' for horizontal: ";
+	cin >> orientation;
+	orientation = toupper(orientation);
+	orientation = verifyOrientationInput(orientation);
+
+	locationAsInts = changeLocationToInts(coordinate);
+
+	placeable(locationAsInts, userBattleship.getLength(), orientation);
+	//placeable(vector<int> location, int shipLength, char orientation)
+	cout << "l;aksjdfl;ajfd;lajfd";
+
+	verticalShipPlacementForLoop(locationAsInts, orientation, userBattleship.getLength());
+//!Battleship input
+
+
+
+
+
+//Cruiser input
+	cout << "\nEnter a letter/number coordinate from the grid below to place you Cruiser (ex: b4\n";
+	cout << "Enter \'q\' to quit\n\n";
+	cin >> coordinateInput;
+
+
+	coordinate = getLocationLetterNumber(coordinateInput);
+	cout << "\n\n coordinate = " << coordinate << endl << endl;
+
+	coordinate = verifyLocationInput(coordinate);
+	cout << "\n\ncoordinate after exiting verifyCoordinateInput() = " << coordinate << "\n\n";
+
+
+	columns = coordinate.at(0);
+	row = coordinate.at(1);
+
+
+
+	cout << "Enter the Carrier's Orientation\n"
+		<< "\'v\' for vertical or \'h\' for horizontal: ";
+	cin >> orientation;
+	orientation = toupper(orientation);
+	orientation = verifyOrientationInput(orientation);
+
+	locationAsInts = changeLocationToInts(coordinate);
+
+	placeable(locationAsInts, userCruiser.getLength(), orientation);
+	//placeable(vector<int> location, int shipLength, char orientation)
+	cout << "l;aksjdfl;ajfd;lajfd";
+
+	verticalShipPlacementForLoop(locationAsInts, orientation, userCruiser.getLength());
+	//!Cruiser input
+
+
+
+
+
+
+
+	//Submarine input
+	cout << "\nEnter a letter/number coordinate from the grid below to place you Submarine (ex: b4\n";
+	cout << "Enter \'q\' to quit\n\n";
+	cin >> coordinateInput;
+
+
+	coordinate = getLocationLetterNumber(coordinateInput);
+	cout << "\n\n coordinate = " << coordinate << endl << endl;
+
+	coordinate = verifyLocationInput(coordinate);
+	cout << "\n\ncoordinate after exiting verifyCoordinateInput() = " << coordinate << "\n\n";
+
+
+	columns = coordinate.at(0);
+	row = coordinate.at(1);
+
+
+
+	cout << "Enter the Carrier's Orientation\n"
+		<< "\'v\' for vertical or \'h\' for horizontal: ";
+	cin >> orientation;
+	orientation = toupper(orientation);
+	orientation = verifyOrientationInput(orientation);
+
+	locationAsInts = changeLocationToInts(coordinate);
+
+	placeable(locationAsInts, userSubmarine.getLength(), orientation);
+	//placeable(vector<int> location, int shipLength, char orientation)
+	cout << "l;aksjdfl;ajfd;lajfd";
+
+	verticalShipPlacementForLoop(locationAsInts, orientation, userSubmarine.getLength());
+	//!Submarine input
+
+
+
+
+
+
+
+
+	//Destroyer input
+	cout << "\nEnter a letter/number coordinate from the grid below to place you Battleship (ex: b4\n";
+	cout << "Enter \'q\' to quit\n\n";
+	cin >> coordinateInput;
+
+
+	coordinate = getLocationLetterNumber(coordinateInput);
+	cout << "\n\n coordinate = " << coordinate << endl << endl;
+
+	coordinate = verifyLocationInput(coordinate);
+	cout << "\n\ncoordinate after exiting verifyCoordinateInput() = " << coordinate << "\n\n";
+
+
+	columns = coordinate.at(0);
+	row = coordinate.at(1);
+
+
+
+	cout << "Enter the Carrier's Orientation\n"
+		<< "\'v\' for vertical or \'h\' for horizontal: ";
+	cin >> orientation;
+	orientation = toupper(orientation);
+	orientation = verifyOrientationInput(orientation);
+
+	locationAsInts = changeLocationToInts(coordinate);
+
+	placeable(locationAsInts, userDestroyer.getLength(), orientation);
+	//placeable(vector<int> location, int shipLength, char orientation)
+	cout << "l;aksjdfl;ajfd;lajfd";
+
+	verticalShipPlacementForLoop(locationAsInts, orientation, userDestroyer.getLength());
+	//!Destroyer input
+
 }//!void Board::placeUserShips()
 
 
@@ -109,24 +273,40 @@ void Board::placeUserShips()
 //loop through the grid 
 //from an input row number
 //to the final row or collumn
-void Board::verticalShipPlacementForLoop(string location, char orientation)
+void Board::verticalShipPlacementForLoop(vector<int> location, char orientation, int shipLength)
 {
-	int colLocation = location[0];
-	int rowLocation = location[1];
 
-	cout << "colLocation = " << colLocation;
-	cout << "\nrowLocation = " << rowLocation << endl;
+	
+	int rowLocation = location[0];//-1 because userGrid starts goes from 0-9
+	int colLocation = location[1] - 1;//-1 because userGrid starts goes from 0-9
 
-	for (rowLocation; rowLocation < 10; rowLocation++)
+	int j = colLocation, k = rowLocation;
+
+	cout << "rowLocation = " << rowLocation;
+	cout << "\ncolLocation = " << colLocation << endl << endl << endl;
+
+	
+	if (orientation == 'H')
 	{
-		for (colLocation; colLocation < 10; colLocation++)
+		for (int i = 0; i < shipLength; i++)
 		{
-			userGrid[rowLocation][colLocation] = ship;
+			userGrid[rowLocation][j] = ship;
+			cout << "userGrid[i][j] = " << userGrid[rowLocation][j] << endl << "i, j = " << rowLocation << ", " << j << endl << endl;
+			j++;
 		}
 	}
 
+	if (orientation == 'V')
+	{
+		for (int i = 0; i < shipLength; i++)
+		{
+			userGrid[k][colLocation] = ship;
+			cout << "userGrid[i][j] = " << userGrid[i][j] << endl << "i, j = " << i << ", " << j << endl << endl;
+			k++;
+		}
+	}
 	displayGrid();
-	cout << " end of verticalShipPlacementForLoop()\n\n";
+	cout << "\n\nend of verticalShipPlacementForLoop()\n\n";
 	
 }//!void Board::verticalShipPlacementForLoop(int startCol)
 
@@ -135,7 +315,7 @@ void Board::verticalShipPlacementForLoop(string location, char orientation)
 
 
 
-//test for correct location input
+//test for correct location input    
 //return location in letternumber format (ex: b4)
 //used for computer and user input
 string Board::getLocationLetterNumber(string _coordinate)
@@ -154,10 +334,15 @@ string Board::getLocationLetterNumber(string _coordinate)
 		{
 			locChar = _coordinate[i];
 			returnString.push_back(_coordinate[i]);
-			
+
 			break;
 		}
 	}
+	//if ()				//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	//{
+	//	cout << "\n\neeeeeeeeee\n\n";	//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	//	return "A1";					//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	//}
 		cout << "locChar = " << locChar << "\n\n";
 
 	//returnString[2] = first int within _coordinate
@@ -188,28 +373,63 @@ string Board::getLocationLetterNumber(string _coordinate)
 }//!string Board::verifyLocationInput(string _coordinate)
 
 
+//convert row to an int
+vector<int> Board::changeLocationToInts(string _location)
+{
+	char letter = 'A';
+	int number = 0;
 
+	int rowNumber, colNumber;
+	vector<char> vecLetter;
+	vector<int> vecNumber;
+	vector<int> locationAsInts;
+
+	//link letters A-J with a number to change location row to
+	for (number; number < 10; number++)
+	{
+		vecLetter.push_back(letter);
+		vecNumber.push_back(number);
+		letter++;
+	}
+
+	//replace the row letter in _location with its number representation
+	for (int i = 0; i < 10; i++)
+	{
+		if (_location.c_str()[0] == vecLetter[i])
+		{
+			cout << "\n\nvecNumber[i] = " << vecNumber[i] << endl << endl;
+			rowNumber = vecNumber[i];
+			break;
+		}
+
+	}
+	cout << "\n\nrowNumber = " << rowNumber << endl << endl;
+	locationAsInts.push_back(rowNumber);
+	locationAsInts.push_back(_location.c_str()[1] - '0');
+
+	cout << "\n\nlocationAsInts[0] = " << locationAsInts[0] << endl;
+	cout << "locationAsInts[1] = " << locationAsInts[1] << endl << endl << endl;
+
+	return locationAsInts;
+}
  
 
 //ensure user enters row letter from a-j
 //and col number from 1-10
-string Board::verifyLocationInput(string _location)
+string Board::verifyLocationInput(string _location) //_location is in LETTERnumber format (ex: F4)
 {
-	string row;
-	row = _location.c_str()[1];
+	string row, colStr;
+	row = _location.c_str()[0];
 	row = toupper(row.c_str()[0]);//convert row to uppercase
-	int col;
-	istringstream(_location) >> col;//convert _location[1] to an int
+	int col = _location.c_str()[1] - '0'; //convert _location[1] to an int
 
 	cout << endl << endl;
 	cout << "_location[0] = " << row << endl;
 	cout << "_location[1] = " << col << endl;
-	
-	/*string col;
-	col = _location[1];*/
 
 
 
+	int count = 1;
 	//ensure proper letter input
 	while (!isalpha(row.c_str()[0]) || (row != "A" && row != "B" && row != "C" && row != "D"
 		&& row != "E" && row != "F" && row != "G" && row != "H"
@@ -218,8 +438,11 @@ string Board::verifyLocationInput(string _location)
 		cout << "Enter the Row Letter A-J (\'q\' to quit): ";
 		cin.clear();
 		cin.ignore(256, '\n');
+
 		cin >> row;
 		row = toupper(row.c_str()[0]);
+
+		cout << "\n\nrow = " << row << endl << endl;
 
 		//check if player entered 'q' to quit
 		/*
@@ -245,8 +468,9 @@ string Board::verifyLocationInput(string _location)
 	
 	//set location = to verified input
 	_location[0] = row[0];
-	//col = to_string(col);
-	//_location[1] = to_string(col);
+	colStr = to_string(col);//convert col back to a string
+	_location[1] = colStr[0];//place the number (in string form) currently known as col into _location[1]
+
 
 	cout << "\n\n_location = " << _location << endl << "end of verifyLocationInput function\n\n";
 
@@ -317,24 +541,48 @@ void Board::displayGrid()
 //check if the ship can be placed
 //it can't be placed if a ship already exists in the same place
 //or if it falls off of the board
-bool Board::placeable(int _col, char _row, char _orientation)
+bool Board::placeable(vector<int> location, int shipLength, char orientation)
 {
-	bool placeable = false; //var to signify if ship may be placed at location
+	bool placeableBool = false; //var to signify if ship may be placed at location
+
+	int rowLocation = location[0];//-1 because userGrid starts goes from 0-9
+	int colLocation = location[1];//-1 because userGrid starts goes from 0-9
 	
-	for (int r = 0; r < 10; r++)
+	if (orientation == 'H')
 	{
-		for (int c = 0; c < 10; c++)
+		if ((colLocation + shipLength) > 10)
 		{
-			if (c = _col)
-			{
-				//board[r][c] = 1;
-			}
+			placeableBool = false;
+			cout << "\n\nfalse colLocation + shipLength = " << colLocation + shipLength << endl << endl;
+		}
+		else if (userGrid[rowLocation][colLocation] == ship) placeableBool = false;
+
+		else
+		{
+			placeableBool = true;
+			cout << "\n\ntrue colLocation + shipLength = " << colLocation + shipLength << endl << endl;
 		}
 	}
-	//if a ship is already here
-	//or if the ship falls off the board
-	//return false
-	return false;
+	else if (orientation == 'V')
+	{
+		if ((rowLocation + shipLength) > 10)
+		{
+			placeableBool = false;
+			cout << "false rowLocation + shipLength = " << rowLocation + shipLength << endl << endl;
+		}
+
+		else if (userGrid[rowLocation][colLocation] == ship) placeableBool = false;
+
+		else
+		{
+			placeableBool = true;
+			cout << "true0000 rowLocation + shipLength =	" << rowLocation + shipLength << endl << endl;
+		}
+	}
+	else cout << "\n\njfljsfl;kjasdf;lkjasdfl;kjsadf\n\n";
+	
+	cout << "placeableBool = " << placeableBool << endl << endl;
+	return placeableBool;
 }//!bool Board::placeable(int _col, char _row, char _orientation)
 
 

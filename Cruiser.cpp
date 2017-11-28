@@ -4,6 +4,7 @@
 
 Cruiser::Cruiser()
 {
+	setLength(_length);
 }
 
 
