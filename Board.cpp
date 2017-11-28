@@ -91,7 +91,7 @@ void Board::placeUserShips()
 	
 	//userCarrier.setOrientation(orientation);
 	
-
+	 
 //!carrier input
 }//!void Board::placeUserShips()
 
