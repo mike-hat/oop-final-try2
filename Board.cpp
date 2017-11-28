@@ -106,7 +106,7 @@ void Board::verticalShipPlacementForLoop(string location, char orientation)
 {
 	int colLocation = location[0];
 	int rowLocation = location[1];
-
+	 
 	cout << "colLocation = " << colLocation;
 	cout << "\nrowLocation = " << rowLocation << endl;
 
