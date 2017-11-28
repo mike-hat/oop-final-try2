@@ -36,141 +36,55 @@ void Board::placeUserShips()
 	cin >> orientation;
 	orientation = toupper(orientation);
 
-	coordinate = verifyLocationInput(coordinateInput);
+	coordinate = getLocationLetterNumber(coordinateInput);
 	columns = coordinate.at(0);
 	row = coordinate.at(1);
 
-	switch (columns)
+	verticalShipPlacementForLoop(coordinate, orientation);
+
+	/*switch (columns)
 	{
-	case 'A':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
+	case 'A': verticalShipPlacementForLoop(coordinate, orientation);
+	
 		
 		break;
 
-	case 'B':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
+	case 'B': verticalShipPlacementForLoop(coordinate, orientation);
 
-		else if (orientation == 'H')
-		{
-
-		}
 		
 		break;
 
-	case 'C':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
-		
-		break;
-
-	case 'D':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
-		
-		break;
-
-	case 'E':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
-		
-		break;
-
-	case 'F':
-		
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
+	case 'C': verticalShipPlacementForLoop(coordinate, orientation);
 
 		break;
 
-	case 'G':
-
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
+	case 'D': verticalShipPlacementForLoop(coordinate, orientation);
 
 		break;
 
-	case 'H':
+	case 'E': verticalShipPlacementForLoop(coordinate, orientation);
+		
+		break;
 
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
-
-		else if (orientation == 'H')
-		{
-
-		}
+	case 'F': verticalShipPlacementForLoop(coordinate, orientation);
 
 		break;
 
-	case 'I':
+	case 'G': verticalShipPlacementForLoop(coordinate, orientation);
 
-		if (orientation == 'V')
-		{
-			verticalShipPlacementForLoop(coordinate, orientation);
-		}
+		break;
 
-		else if (orientation == 'H')
-		{
+	case 'H': verticalShipPlacementForLoop(coordinate, orientation);
 
-		}
+		break;
+
+	case 'I': verticalShipPlacementForLoop(coordinate, orientation);
 
 		break;
 
 	default:
 		break;
-	}
+	}*/
 	
 	
 	
@@ -181,13 +95,20 @@ void Board::placeUserShips()
 //!carrier input
 }//!void Board::placeUserShips()
 
+
+
+
+
 //loop through the grid 
 //from an input row number
 //to the final row or collumn
 void Board::verticalShipPlacementForLoop(string location, char orientation)
 {
-	int rowLocation = location[1];
 	int colLocation = location[0];
+	int rowLocation = location[1];
+
+	cout << "colLocation = " << colLocation;
+	cout << "\nrowLocation = " << rowLocation << endl;
 
 	for (rowLocation; rowLocation < 10; rowLocation++)
 	{
@@ -202,9 +123,15 @@ void Board::verticalShipPlacementForLoop(string location, char orientation)
 	
 }//!void Board::verticalShipPlacementForLoop(int startCol)
 
+
+
+
+
+
 //test for correct location input
+//return location in letternumber format (ex: b4)
 //used for computer and user input
-string Board::verifyLocationInput(string _coordinate)
+string Board::getLocationLetterNumber(string _coordinate)
 {
 	char intKeys[] = "123456789";
 	char charKeys[] = "abcdefghijABCDEFGHIJ";
@@ -244,34 +171,6 @@ string Board::verifyLocationInput(string _coordinate)
 	return returnString;
 		
 
-////ensure proper input
-//while (!isalpha(locLetter) || (locLetter != 'A' && locLetter != 'B' && locLetter != 'C' && locLetter != 'D'
-//	&& locLetter != 'E' && locLetter != 'F' && locLetter != 'G' && locLetter != 'H'
-//	&& locLetter != 'I' && locLetter != 'J'))
-//{
-//	cout << "---------Enter the Row Letter A-J (\'q\' to quit): ";
-//	cin.clear();
-//	cin.ignore(256, '\n');
-//	cout << "Enter the location in the format of f4, or 4f\n";
-//	cin >> _coordinate;
-//	locNumber = strcspn(_coordinate.c_str(), intKeys);	//locate the first int within _coordinate
-//	locLetter = strcspn(_coordinate.c_str(), charKeys);	//locate the first char within _coordinate
-//	locLetter = toupper(locLetter);
-//	returnString = locLetter + locNumber;				//return in f3 letternumber format
-//
-//	//check if player entered 'q' to quit
-//	/*
-//	TODO: quit the game if player entered 'q'
-//	TODO: make this a function
-//	*/
-//}//!while(!isalpha(row) || ...
-
-
-
-
-
-
-
 
 	////check if player entered 'q' to quit
 	///*
@@ -279,43 +178,16 @@ string Board::verifyLocationInput(string _coordinate)
 	//TODO: make this a function
 	//*/
 
+}//!string Board::verifyLocationInput(string _coordinate)
 
 
-	////row, column, and orientation
-	////input is below
 
 
-	//////ensure proper input0
-	////while (!isalpha(row) || (row != 'A' && row != 'B' && row != 'C' && row != 'D'
-	////	&& row != 'E' && row != 'F' && row != 'G' && row != 'H'
-	////	&& row != 'I' && row != 'J'))
-	////{
-	////	cout << "Enter the Row Letter A-J (\'q\' to quit): ";
-	////	cin.clear();
-	////	cin.ignore(256, '\n');
-	////	cin >> row;
-	////	row = toupper(row);
 
-	//	//check if player entered 'q' to quit
-	//	/*
-	//	TODO: quit the game if player entered 'q'
-	//	TODO: make this a function
-	//	*/
-	////}//!while(!isalpha(row) || ...
+//verify the orientation input is 'v' or 'h'
+string Board::verifyOrientationInput(string _orientation)
+{
 
-	////cout << "Enter the Column Number: ";
-	////cin >> col;
-
-	//////check for correct input
-	////while (cin.fail() || col < 1 || col > 10)
-	////{
-	////	cout << "Enter the Column Number 1-10 (\'q\' to quit): ";
-	////	cin.clear();
-	////	cin.ignore(256, '\n');
-	////	cin >> col;
-
-	////	//TODO: quit
-	////}
 
 	////cout << "Enter the Carrier's Orientation\n"
 	////	<< "\'v\' for vertical or \'h\' for horizontal: ";
@@ -335,9 +207,65 @@ string Board::verifyLocationInput(string _coordinate)
 	////	//TODO: quit
 
 	////}//!while(isalpha(orientation)
-}//!string Board::verifyLocationInput(string _coordinate)
+
+}//!string Board::verifyOrientationInput(string _orientation)
 
 
+ 
+ 
+ 
+//ensure user enters row letter from a-j
+//and col number from 1-10
+string Board::verifyLocationInput(string _location)
+{
+	char row = _location[0];
+	int col = _location[1];
+
+	//ensure proper letter input
+	while (!isalpha(row) || (row != 'A' && row != 'B' && row != 'C' && row != 'D'
+		&& row != 'E' && row != 'F' && row != 'G' && row != 'H'
+		&& row != 'I' && row != 'J'))
+	{
+		cout << "Enter the Row Letter A-J (\'q\' to quit): ";
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> row;
+		row = toupper(row);
+
+		//check if player entered 'q' to quit
+		/*
+		TODO: quit the game if player entered 'q'
+		TODO: make this a function
+		*/
+	}//!while(!isalpha(row) || ...
+
+	cout << "Enter the Column Number: ";
+	cin >> col;
+
+	//ensure proper number input
+	while (cin.fail() || col < 1 || col > 10)
+	{
+		cout << "Enter the Column Number 1-10 (\'q\' to quit): ";
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> col;
+
+		//TODO: quit
+	}
+	
+	//set location = to verified input
+	_location[0] = row;
+	_location[1] = col;
+
+	return _location;
+}//!string Board::verifyLocationInput(string _location)
+
+
+
+
+
+
+//display grid as grid[rows][columns]
 void Board::displayGrid()
 {
 	char rowLetter = 'A';//used to display the row letter
@@ -361,6 +289,14 @@ void Board::displayGrid()
 	}//!output the grid
 }//!void Board::displayGrid()
 
+
+
+
+
+
+//check if the ship can be placed
+//it can't be placed if a ship already exists in the same place
+//or if it falls off of the board
 bool Board::placeable(int _col, char _row, char _orientation)
 {
 	bool placeable = false; //var to signify if ship may be placed at location
@@ -380,6 +316,11 @@ bool Board::placeable(int _col, char _row, char _orientation)
 	//return false
 	return false;
 }//!bool Board::placeable(int _col, char _row, char _orientation)
+
+
+
+
+
 
 Board::~Board()
 {

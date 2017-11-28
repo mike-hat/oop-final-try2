@@ -55,8 +55,16 @@ public:
 	//get user input
 	void placeUserShips();
 
-	//verifyUserInput()
+	//convert the location input to letternumber format (ex: d8)
+	string getLocationLetterNumber(string _location);
+
+	//verify the location input is between a-j, and 1-10
 	string verifyLocationInput(string _location);
+
+
+	//verify the orientation input is 'v' or 'h'
+	string verifyOrientationInput(string _orientation);
+
 
 	//display grid
 	void displayGrid();
