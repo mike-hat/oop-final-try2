@@ -8,7 +8,6 @@ int main()
 	//board.placeUserShips();
 	//board.displayGrid();
 	board.inputShipsFromFile();
-//	board.placeShipsFromFile();
 
 	return 0;
 }

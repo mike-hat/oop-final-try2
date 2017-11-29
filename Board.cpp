@@ -14,6 +14,16 @@ Board::Board()
 	//open the input file
 	inputFile.open("ship_placement.csv");
 
+	//initialize computer's ships with names and ship sizes
+	initCompShips();
+
+	//place computer's ships on board
+	randomlyPlaceComputerShips(computerCarrier);
+	randomlyPlaceComputerShips(computerBattleship);
+	randomlyPlaceComputerShips(computerCruiser);
+	randomlyPlaceComputerShips(computerSubmarine);
+	randomlyPlaceComputerShips(computerDestroyer);
+
 }
 
 void Board::placeUserShips()
@@ -675,7 +685,6 @@ void Board::inputShipsFromFile()
 
 
 
-
 void Board::placeShipsFromFile(vector<string> shipFromFile)
 {
 
@@ -689,7 +698,7 @@ void Board::placeShipsFromFile(vector<string> shipFromFile)
 	//by coverting each letter in it to c_string, then that to uppercase
 	for (int i = 0; i < shipType.length(); i++)
 	{
-		shipType[i] = toupper(shipType.c_str()[i]); 
+		shipType[i] = toupper(shipType.c_str()[i]);
 	}
 
 	//convert rowLocation to nums 1-10 from nums 17-26
@@ -737,7 +746,7 @@ void Board::placeShipsFromFile(vector<string> shipFromFile)
 	{
 		for (int i = 0; i < shipLength; i++)
 		{
-			userShipGrid[k][colLocation-1] = ship;
+			userShipGrid[k][colLocation - 1] = ship;
 			k++;
 		}
 	}
@@ -745,6 +754,126 @@ void Board::placeShipsFromFile(vector<string> shipFromFile)
 	cout << "\n\nend of verticalShipPlacementForLoop()\n\n";
 
 }//!void Board::placeShipsFromFile(vector<int> shipVec)
+
+
+
+
+
+
+
+//intiailize each ship with its cooresponding name
+void Board::initCompShips()
+{
+	
+	computerCarrier.push_back("CARRIER");
+	computerCarrier.push_back("5");			//TODO: derive ship size from Watervehicle objects
+
+	computerBattleship.push_back("BATTLESHIP");
+	computerBattleship.push_back("4");
+
+	computerCruiser.push_back("CRUISER");
+	computerCruiser.push_back("3");
+
+	computerSubmarine.push_back("SUBMARINE");
+	computerSubmarine.push_back("3");
+
+	computerDestroyer.push_back("DESTROYER");
+	computerDestroyer.push_back("2");
+}
+
+
+
+
+void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
+{
+	//while place = false
+	//loop through the area the ship will go
+	//if grid at each element = water, placed = true
+	//else, place = false; return, get new values
+	//if ship falls off board, placed = false; return, get new values
+	//else, place = true
+	
+	bool placed = false;
+	bool pass = false;
+	int row, col, shipLength, orientation;
+	string location;
+	shipLength = shipFromComputer[1].c_str()[0] - '0';
+
+	cout << "\n\n\n\nship length = " << shipLength << endl << endl;
+
+	srand(time(NULL));//seed rand()
+
+	while (placed == false)
+	{
+		row = rand() % 9;//these need to be between 0-9
+		col = rand() % 9;//to fit in the 10x10 computerShipGrid board
+		location = to_string(row);//set location to the row string
+		location += to_string(col);//set location to row+col string
+
+		orientation = rand() % 2;//vertical = 1, horizontal = 2
+
+		//if shipLength + row or col > 9, placebale = false
+		if (((shipLength + row) > 9) && ((shipLength + col) > 9))
+		{
+			placed = false;
+		}
+
+		if (orientation == 1)				//vertical
+		{
+			//if computerShipGrid[row][col]
+			//for (row; row < 10; row++)
+			//{
+				for (int i = 0; i < shipLength; i++)
+				{
+					if (computerShipGrid[row][col] == water)
+					{
+						computerShipGrid[row][col] = ship;
+						col++;
+						placed = true;
+					}//!if(computerShipGrid[row][col] == water)
+					else
+					{
+						placed = false;
+						break;
+					}//!else
+				}//!for (col; col < 9; col++)
+			//}//!for (row; row < 9; row++)
+		}//!if (orientation == 1)
+
+
+		else if (orientation == 0)				//horizontal
+		{
+			//if computerShipGrid[row][col]
+			//for (row; row < 10; row++)
+			//{
+				for (int i = 0; i < shipLength; i++)
+				{
+					if (computerShipGrid[row][col] == water)
+					{
+						computerShipGrid[row][col] = ship;
+						row++;
+						placed = true;
+					}//!if(computerShipGrid[row][col] == water)
+					else
+					{
+						placed = false;
+						break;
+					}//!else
+				}//!for (col; col < 9; col++)
+			//}//!for (row; row < 9; row++)
+		}//!if (orientation == 2)
+	}//!while (placed == false)
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+			cout << computerShipGrid[i][j] << " ";
+		cout << endl;
+	}
+	cout << endl;
+
+}//!void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
+
 
 Board::~Board()
 {

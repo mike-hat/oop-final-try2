@@ -16,6 +16,8 @@
 #include <sstream>
 #include <iterator>
 #include <vector>	
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -25,11 +27,11 @@ class Board
 	//TODO: torpedoes
 	//TODO: place ships
 private:
-	Carrier userCarrier1, computerCarrier;
-	Battleship userBattleship1, computerBattleship;
-	Cruiser userCruiser1, computerCruser;
-	Submarine userSubmarine1, computerSubmarine;
-	Destroyer userDestroyer1, computerDestroyer;
+	Carrier userCarrier1;
+	Battleship userBattleship1;
+	Cruiser userCruiser1;
+	Submarine userSubmarine1;
+	Destroyer userDestroyer1;
 
 	ifstream inputFile;
 
@@ -39,11 +41,11 @@ private:
 	//computer vectors
 	vector <vector<char> > computerShipGrid;
 	vector <vector<char> > computerGuessGrid;
-	vector <string> userCarrier;
-	vector <string> userBattleship;
-	vector <string> userCruiser;
-	vector <string> userSubmarine;
-	vector <string> userDestroyer;
+	vector <string> userCarrier, computerCarrier;
+	vector <string> userBattleship, computerBattleship;
+	vector <string> userCruiser, computerCruiser;
+	vector <string> userSubmarine, computerSubmarine;
+	vector <string> userDestroyer, computerDestroyer;
 
 	int rows = 10, columns = 10;
 
@@ -54,6 +56,8 @@ private:
 
 	//for loop to insert into the grid
 	void verticalShipPlacementForLoop(vector<int> location, char orientation, int shipLength);
+
+
 
 public:
 	Board();
@@ -90,7 +94,13 @@ public:
 	void inputShipsFromFile();
 
 	//place the ships from the file onto the board
-	void placeShipsFromFile(vector<string> ship);
+	void placeShipsFromFile(vector<string> shipFromFile);
+
+	//initialize the computerShip vectors
+	void initCompShips();
+
+	//place the computer's ships in random non-overlapping locations within the game board
+	void randomlyPlaceComputerShips(vector<string> shipFromComputer);
 
 	~Board();
 };
