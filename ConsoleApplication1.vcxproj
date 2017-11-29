@@ -161,7 +161,11 @@
     <ClInclude Include="WaterVehicle.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="makefile" />
     <None Include="ship_placement.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

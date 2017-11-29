@@ -67,5 +67,13 @@
     <None Include="ship_placement.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="makefile">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

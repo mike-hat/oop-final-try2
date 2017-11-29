@@ -21,12 +21,15 @@
 
 using namespace std;
 
+
 class Board
 {
 
 	//TODO: torpedoes
 	//TODO: place ships
 private:
+	
+
 	Carrier userCarrier1;
 	Battleship userBattleship1;
 	Cruiser userCruiser1;
@@ -34,7 +37,10 @@ private:
 	Destroyer userDestroyer1;
 
 	ifstream inputFile;
+	//create vectors that contain ship locations
+	//push_back the ship locations when you place a ship there
 
+	//user vectors
 	vector <vector<char> > userShipGrid;
 	vector <vector<char> > userGuessGrid;
 
@@ -47,7 +53,7 @@ private:
 	vector <string> userSubmarine, computerSubmarine;
 	vector <string> userDestroyer, computerDestroyer;
 
-	int rows = 10, columns = 10;
+	int gridRows = 10, gridColumns = 10;
 
 	char miss = 'X';
 	char hit = 'O';
@@ -102,6 +108,16 @@ public:
 	//place the computer's ships in random non-overlapping locations within the game board
 	void randomlyPlaceComputerShips(vector<string> shipFromComputer);
 
+	//computer fires a torpedo at a random, unique location on userShipGrid
+	//indicates hits and misses
+	void fireComputerTorpedoes();
+
+	//prompt user to fire a torpedo at the computerShipGrid
+	//indicate hits and misses
+	void fireUserComputerTorpedos();
+
+
+	void displayComputerGrid();
 	~Board();
 };
 
