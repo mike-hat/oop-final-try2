@@ -9,6 +9,7 @@
 #include "Destroyer.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cstring>
 #include <cctype>
@@ -24,14 +25,25 @@ class Board
 	//TODO: torpedoes
 	//TODO: place ships
 private:
-	Carrier userCarrier, computerCarrier;
-	Battleship userBattleship, computerBattleship;
-	Cruiser userCruiser, computerCruser;
-	Submarine userSubmarine, computerSubmarine;
-	Destroyer userDestroyer, computerDestroyer;
+	Carrier userCarrier1, computerCarrier;
+	Battleship userBattleship1, computerBattleship;
+	Cruiser userCruiser1, computerCruser;
+	Submarine userSubmarine1, computerSubmarine;
+	Destroyer userDestroyer1, computerDestroyer;
 
-	//static int grid[10][10];
-	vector <vector<char> > userGrid;
+	ifstream inputFile;
+
+	vector <vector<char> > userShipGrid;
+	vector <vector<char> > userGuessGrid;
+
+	//computer vectors
+	vector <vector<char> > computerShipGrid;
+	vector <vector<char> > computerGuessGrid;
+	vector <string> userCarrier;
+	vector <string> userBattleship;
+	vector <string> userCruiser;
+	vector <string> userSubmarine;
+	vector <string> userDestroyer;
 
 	int rows = 10, columns = 10;
 
@@ -52,7 +64,7 @@ public:
 			//display grid with all of their guesses
 			//display locations of computer's ships
 
-	//get user input
+	//get user input and place ships on the board
 	void placeUserShips();
 
 	//convert the location input to letternumber format (ex: d8)
@@ -73,6 +85,12 @@ public:
 
 	//test if ships can be placed where requested
 	bool placeable(vector<int> location, int shipLength, char orientation);
+
+	//input ships from ship_placement.csv
+	void inputShipsFromFile();
+
+	//place the ships from the file onto the board
+	void placeShipsFromFile(vector<string> ship);
 
 	~Board();
 };

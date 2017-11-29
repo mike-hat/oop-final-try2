@@ -10,4 +10,5 @@ Submarine::Submarine()
 
 Submarine::~Submarine()
 {
+	
 }

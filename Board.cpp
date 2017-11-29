@@ -5,7 +5,15 @@
 Board::Board()
 {
 	//initialize the game board to have water in each cell
-	userGrid = vector<vector<char> >(rows, vector<char>(columns, water));
+	userShipGrid = vector<vector<char> >(rows, vector<char>(columns, water));
+	userGuessGrid = vector<vector<char> >(rows, vector<char>(columns, water));
+
+	computerShipGrid = vector<vector<char> >(rows, vector<char>(columns, water));
+	computerGuessGrid = vector<vector<char> >(rows, vector<char>(columns, water));
+
+	//open the input file
+	inputFile.open("ship_placement.csv");
+
 }
 
 void Board::placeUserShips()
@@ -54,11 +62,11 @@ void Board::placeUserShips()
 
 	locationAsInts = changeLocationToInts(coordinate);
 
-	placeable(locationAsInts, userCarrier.getLength(), orientation);
+	placeable(locationAsInts, userCarrier1.getLength(), orientation);
 	//placeable(vector<int> location, int shipLength, char orientation)
 	cout << "l;aksjdfl;ajfd;lajfd";
 
-	verticalShipPlacementForLoop(locationAsInts, orientation, userCarrier.getLength());
+	verticalShipPlacementForLoop(locationAsInts, orientation, userCarrier1.getLength());
 
 
 	/*switch (columns)
@@ -141,11 +149,11 @@ void Board::placeUserShips()
 
 	locationAsInts = changeLocationToInts(coordinate);
 
-	placeable(locationAsInts, userBattleship.getLength(), orientation);
+	placeable(locationAsInts, userBattleship1.getLength(), orientation);
 	//placeable(vector<int> location, int shipLength, char orientation)
 	cout << "l;aksjdfl;ajfd;lajfd";
 
-	verticalShipPlacementForLoop(locationAsInts, orientation, userBattleship.getLength());
+	verticalShipPlacementForLoop(locationAsInts, orientation, userBattleship1.getLength());
 //!Battleship input
 
 
@@ -178,11 +186,11 @@ void Board::placeUserShips()
 
 	locationAsInts = changeLocationToInts(coordinate);
 
-	placeable(locationAsInts, userCruiser.getLength(), orientation);
+	placeable(locationAsInts, userCruiser1.getLength(), orientation);
 	//placeable(vector<int> location, int shipLength, char orientation)
 	cout << "l;aksjdfl;ajfd;lajfd";
 
-	verticalShipPlacementForLoop(locationAsInts, orientation, userCruiser.getLength());
+	verticalShipPlacementForLoop(locationAsInts, orientation, userCruiser1.getLength());
 	//!Cruiser input
 
 
@@ -217,11 +225,11 @@ void Board::placeUserShips()
 
 	locationAsInts = changeLocationToInts(coordinate);
 
-	placeable(locationAsInts, userSubmarine.getLength(), orientation);
+	placeable(locationAsInts, userSubmarine1.getLength(), orientation);
 	//placeable(vector<int> location, int shipLength, char orientation)
 	cout << "l;aksjdfl;ajfd;lajfd";
 
-	verticalShipPlacementForLoop(locationAsInts, orientation, userSubmarine.getLength());
+	verticalShipPlacementForLoop(locationAsInts, orientation, userSubmarine1.getLength());
 	//!Submarine input
 
 
@@ -257,11 +265,11 @@ void Board::placeUserShips()
 
 	locationAsInts = changeLocationToInts(coordinate);
 
-	placeable(locationAsInts, userDestroyer.getLength(), orientation);
+	placeable(locationAsInts, userDestroyer1.getLength(), orientation);
 	//placeable(vector<int> location, int shipLength, char orientation)
 	cout << "l;aksjdfl;ajfd;lajfd";
 
-	verticalShipPlacementForLoop(locationAsInts, orientation, userDestroyer.getLength());
+	verticalShipPlacementForLoop(locationAsInts, orientation, userDestroyer1.getLength());
 	//!Destroyer input
 
 }//!void Board::placeUserShips()
@@ -290,8 +298,8 @@ void Board::verticalShipPlacementForLoop(vector<int> location, char orientation,
 	{
 		for (int i = 0; i < shipLength; i++)
 		{
-			userGrid[rowLocation][j] = ship;
-			cout << "userGrid[i][j] = " << userGrid[rowLocation][j] << endl << "i, j = " << rowLocation << ", " << j << endl << endl;
+			userShipGrid[rowLocation][j] = ship;
+			cout << "userGrid[i][j] = " << userShipGrid[rowLocation][j] << endl << "i, j = " << rowLocation << ", " << j << endl << endl;
 			j++;
 		}
 	}
@@ -300,8 +308,8 @@ void Board::verticalShipPlacementForLoop(vector<int> location, char orientation,
 	{
 		for (int i = 0; i < shipLength; i++)
 		{
-			userGrid[k][colLocation] = ship;
-			cout << "userGrid[i][j] = " << userGrid[i][j] << endl << "i, j = " << i << ", " << j << endl << endl;
+			userShipGrid[k][colLocation] = ship;
+			cout << "userGrid[i][j] = " << userShipGrid[i][j] << endl << "i, j = " << i << ", " << j << endl << endl;
 			k++;
 		}
 	}
@@ -526,7 +534,7 @@ void Board::displayGrid()
 		cout << rowLetter << " ";
 		for (columns = 0; columns < 10; columns++)
 		{
-			cout << userGrid[rows][columns] << " ";
+			cout << userShipGrid[rows][columns] << " ";
 		}
 		cout << endl;
 		rowLetter++;
@@ -555,7 +563,7 @@ bool Board::placeable(vector<int> location, int shipLength, char orientation)
 			placeableBool = false;
 			cout << "\n\nfalse colLocation + shipLength = " << colLocation + shipLength << endl << endl;
 		}
-		else if (userGrid[rowLocation][colLocation] == ship) placeableBool = false;
+		else if (userShipGrid[rowLocation][colLocation] == ship) placeableBool = false;
 
 		else
 		{
@@ -571,7 +579,7 @@ bool Board::placeable(vector<int> location, int shipLength, char orientation)
 			cout << "false rowLocation + shipLength = " << rowLocation + shipLength << endl << endl;
 		}
 
-		else if (userGrid[rowLocation][colLocation] == ship) placeableBool = false;
+		else if (userShipGrid[rowLocation][colLocation] == ship) placeableBool = false;
 
 		else
 		{
@@ -590,6 +598,155 @@ bool Board::placeable(vector<int> location, int shipLength, char orientation)
 
 
 
+
+
+void Board::inputShipsFromFile()
+{
+	stringstream ss;
+	string ship, shipType, location, orientation;
+	int count = 0;//used in while(inputFile)...
+				  //every ship vector will contain 3 items
+				  //and their will be a total of 5 ships/cases within the switch
+
+	if (inputFile.fail())
+	{
+		cerr << "\n\nERROR: UNABLE TO READ FILE\n\n";
+	}
+
+
+	while (!(inputFile.eof()))
+	{
+		//ss >> inputFile;
+		getline(inputFile, shipType, ',');
+		getline(inputFile, location, ',');
+		getline(inputFile, orientation, '\n');
+
+		switch (count)
+		{
+		case 0: //the first line in the file is a description of the lines that follow
+				//this will be ignored by the program
+			break;
+
+		case 1: userCarrier.push_back(shipType);
+			userCarrier.push_back(location);
+			userCarrier.push_back(orientation);
+			break;
+
+		case 2: userBattleship.push_back(shipType);
+			userBattleship.push_back(location);
+			userBattleship.push_back(orientation);
+			break;
+
+		case 3: userCruiser.push_back(shipType);
+			userCruiser.push_back(location);
+			userCruiser.push_back(orientation);
+			break;
+
+		case 4: userSubmarine.push_back(shipType);
+			userSubmarine.push_back(location);
+			userSubmarine.push_back(orientation);
+			break;
+
+		case 5: userDestroyer.push_back(shipType);
+			userDestroyer.push_back(location);
+			userDestroyer.push_back(orientation);
+		default:
+			break;
+		}//!switch (count)
+
+		count++;
+
+	}//!while (inputFile)
+	
+	cout << "\n\ncompCarrier\n";
+	for (int i = 0; i < userCarrier.size(); i++)
+	{
+		cout << userCarrier[i] << " ";
+	}
+
+
+	placeShipsFromFile(userCarrier);
+	placeShipsFromFile(userBattleship);
+	placeShipsFromFile(userCruiser);
+	placeShipsFromFile(userSubmarine);
+	placeShipsFromFile(userDestroyer);
+
+}//!void Board::placeComputerShips()
+
+
+
+
+void Board::placeShipsFromFile(vector<string> shipFromFile)
+{
+
+	string shipType = shipFromFile[0];
+	string locStr = shipFromFile[1];
+	string orientation = shipFromFile[2];
+	int shipLength, rowLocation = locStr.c_str()[0] - '0', colLocation = locStr.c_str()[1] - '0';
+	//*for rowLocation: A = 17, B = 18, ... I = 25 J = 26
+
+	//convert shipType to uppercase
+	//by coverting each letter in it to c_string, then that to uppercase
+	for (int i = 0; i < shipType.length(); i++)
+	{
+		shipType[i] = toupper(shipType.c_str()[i]); 
+	}
+
+	//convert rowLocation to nums 1-10 from nums 17-26
+	for (int i = 17; i < 26; i++)
+	{
+		if (rowLocation == i)
+		{
+			rowLocation -= 17;
+		}
+	}
+
+	//get shipLength based upon ship type
+	if (shipType == "CARRIER") shipLength = userCarrier1.getLength();
+	else if (shipType == "BATTLESHIP") shipLength = userBattleship1.getLength();
+	else if (shipType == "CRUISER") shipLength = userCruiser1.getLength();
+	else if (shipType == "SUBMARINE") shipLength = userSubmarine1.getLength();
+	else if (shipType == "DESTROYER") shipLength = userDestroyer1.getLength();
+	else cout << "Unrecognized ship tye\n\n";
+
+
+	//convert orientation to uppercase
+	orientation = toupper(orientation.c_str()[0]);
+
+
+	cout << "\n\nshipType = " << shipType << endl;
+	cout << "rowLocation = " << rowLocation << " " << colLocation << endl;
+	cout << "locStr = " << locStr << endl;
+	cout << "shipLength = " << shipLength << "\norientation = " << orientation << endl << endl;
+
+
+
+
+	//place the ships
+	int j = colLocation - 1, k = rowLocation;
+	if (orientation == "H")
+	{
+		for (int i = 0; i < shipLength; i++)
+		{
+			userShipGrid[rowLocation][j] = ship;
+			j++;
+		}
+	}
+
+	if (orientation == "V")
+	{
+		for (int i = 0; i < shipLength; i++)
+		{
+			userShipGrid[k][colLocation-1] = ship;
+			k++;
+		}
+	}
+	displayGrid();
+	cout << "\n\nend of verticalShipPlacementForLoop()\n\n";
+
+}//!void Board::placeShipsFromFile(vector<int> shipVec)
+
 Board::~Board()
 {
+	inputFile.close();
 }
