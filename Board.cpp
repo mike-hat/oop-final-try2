@@ -453,8 +453,12 @@ vector<int> Board::changeLocationToInts(string _location)
 	//extract the column integer from the location string
 	//if column == 10, then _locatoin.c_str()[1] == 1 and _location.c_str()[2] == 0
 	//else column = _location.c_str()[1]
-	if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0')
-		locationAsInts.push_back(10);
+	//if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0')
+	//	locationAsInts.push_back(10);
+	//else if (_location.c_str()[1] == '1' && _location.c_str()[2] != '0')
+	//	locationAsInts.push_back((int)1);
+
+	if (_location.find("10") == true) locationAsInts.push_back(10);//needed because 10 occupies 2 string elements
 	else locationAsInts.push_back(_location.c_str()[1] - '0');
 
 	cout << "\n\nlocationAsInts[0] = " << locationAsInts[0] << endl;
@@ -474,10 +478,8 @@ string Board::verifyLocationInput(string _location) //_location is in LETTERnumb
 	int col;
 
 	//extract the column integer from the location string
-	//if  1 > colomn >= 9, col = _location.c_str()[1]
-	//if column == 10, then _locatoin.c_str()[1] == 1 and _location.c_str()[2] == 0
-	if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0') col = 10;
-	else col = _location.c_str()[1];
+	if (_location.find("10") == true) col = 10;//needed because 10 occupies 2 string elements
+	else col = _location.c_str()[1] - '0';
 
 	cout << endl << endl;
 	cout << "_location[0] = " << row << endl;
