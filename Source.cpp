@@ -37,6 +37,7 @@ int main()
 	board.displayComputerGrid();
 	
 
-	
+	board.quitGame();
+
 	return 0;
 }

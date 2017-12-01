@@ -40,18 +40,18 @@ private:
 	//create vectors that contain ship locations
 	//push_back the ship locations when you place a ship there
 
-	//user vectors
+	//User & Computer board vectors
 	vector <vector<char> > userShipGrid;
 	vector <vector<char> > userGuessGrid;
-
-	//computer vectors
 	vector <vector<char> > computerShipGrid;
 	vector <vector<char> > computerGuessGrid;
-	vector <string> userCarrier, computerCarrier;
-	vector <string> userBattleship, computerBattleship;
-	vector <string> userCruiser, computerCruiser;
-	vector <string> userSubmarine, computerSubmarine;
-	vector <string> userDestroyer, computerDestroyer;
+
+	//User & Computer vectors
+	vector <string> userCarrier, userCarrierLocation, computerCarrier, computerCarrierLocation;
+	vector <string> userBattleship, userBattleshipLocation, computerBattleship, computerBattleshipLocation;
+	vector <string> userCruiser, userCruiserLocation, computerCruiser, computerCruiserLocation;
+	vector <string> userSubmarine, userSubmarineLocation, computerSubmarine, computerSubmarineLocation;
+	vector <string> userDestroyer, userDestroyerLocation, computerDestroyer, computerDestroyerLocation;
 
 	int gridRows = 10, gridColumns = 10;
 
@@ -115,6 +115,10 @@ public:
 	//prompt user to fire a torpedo at the computerShipGrid
 	//indicate hits and misses
 	void fireUserComputerTorpedos();
+
+	//quit function
+	//qame ends if user enters 'q' while placing torpedoes
+	void quitGame();
 
 
 	void displayComputerGrid();

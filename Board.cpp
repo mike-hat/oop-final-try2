@@ -357,7 +357,7 @@ void Board::verticalShipPlacementForLoop(vector<int> location, char orientation,
 //used for computer and user input
 string Board::getLocationLetterNumber(string _coordinate)
 {
-	char intKeys[] = "123456789";
+	char intKeys[] = "12345678910";
 	char charKeys[] = "abcdefghijABCDEFGHIJ";
 	int locInt;//used to locate the first int within the location input
 	char locChar;//used to locate the first char within the location input
@@ -375,14 +375,15 @@ string Board::getLocationLetterNumber(string _coordinate)
 			break;
 		}
 	}
-	//if ()				//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-	//{
-	//	cout << "\n\neeeeeeeeee\n\n";	//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-	//	return "A1";					//eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-	//}
+
 		cout << "locChar = " << locChar << "\n\n";
 
 	//returnString[2] = first int within _coordinate
+
+	//if  1 > colomn >= 9, col = _location.c_str()[1]
+	//if column == 10, then _locatoin.c_str()[1] == 1 and _location.c_str()[2] == 0
+		//if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0') col = 10;
+		//else col = _location.c_str()[1];
 	for (int i = 0; i != _coordinate.length(); i++)
 	{
 		if (isdigit(_coordinate[i]))
@@ -429,9 +430,12 @@ vector<int> Board::changeLocationToInts(string _location)
 		letter++;
 	}
 
+
+
 	//replace the row letter in _location with its number representation
 	for (int i = 0; i < 10; i++)
 	{
+
 		if (_location.c_str()[0] == vecLetter[i])
 		{
 			cout << "\n\nvecNumber[i] = " << vecNumber[i] << endl << endl;
@@ -440,15 +444,24 @@ vector<int> Board::changeLocationToInts(string _location)
 		}
 
 	}
+
+
 	cout << "\n\nrowNumber = " << rowNumber << endl << endl;
-	locationAsInts.push_back(rowNumber);
-	locationAsInts.push_back(_location.c_str()[1] - '0');
+	locationAsInts.push_back(rowNumber);//push_back the int representation of the row letter
+
+	//push_back the column number
+	//extract the column integer from the location string
+	//if column == 10, then _locatoin.c_str()[1] == 1 and _location.c_str()[2] == 0
+	//else column = _location.c_str()[1]
+	if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0')
+		locationAsInts.push_back(10);
+	else locationAsInts.push_back(_location.c_str()[1] - '0');
 
 	cout << "\n\nlocationAsInts[0] = " << locationAsInts[0] << endl;
 	cout << "locationAsInts[1] = " << locationAsInts[1] << endl << endl << endl;
 
 	return locationAsInts;
-}
+}//!
  
 
 //ensure user enters row letter from a-j
@@ -458,13 +471,25 @@ string Board::verifyLocationInput(string _location) //_location is in LETTERnumb
 	string row, colStr;
 	row = _location.c_str()[0];
 	row = toupper(row.c_str()[0]);//convert row to uppercase
-	int col = _location.c_str()[1] - '0'; //convert _location[1] to an int
+	int col;
+
+	//extract the column integer from the location string
+	//if  1 > colomn >= 9, col = _location.c_str()[1]
+	//if column == 10, then _locatoin.c_str()[1] == 1 and _location.c_str()[2] == 0
+	if (_location.c_str()[1] == '1' && _location.c_str()[2] == '0') col = 10;
+	else col = _location.c_str()[1];
 
 	cout << endl << endl;
 	cout << "_location[0] = " << row << endl;
 	cout << "_location[1] = " << col << endl;
 
 
+	//check if player entered 'q' to quit
+	//quit the game if player entered 'q'
+	if (row == "Q")
+	{
+		quitGame();
+	}
 
 	int count = 1;
 	//ensure proper letter input
@@ -482,10 +507,11 @@ string Board::verifyLocationInput(string _location) //_location is in LETTERnumb
 		cout << "\n\nrow = " << row << endl << endl;
 
 		//check if player entered 'q' to quit
-		/*
-		TODO: quit the game if player entered 'q'
-		TODO: make this a function
-		*/
+		//quit the game if player entered 'q'
+		if (row == "Q")
+		{
+			quitGame();
+		}
 	}//!while(!isalpha(row) || ...
 
 
@@ -631,8 +657,7 @@ bool Board::placeable(vector<int> location, int shipLength, char orientation)
 
 void Board::inputShipsFromFile()
 {
-	stringstream ss;
-	string ship, shipType, location, orientation;
+	string ship, shipType, location, orientation; //input data as strings
 	int count = 0;//used in while(inputFile)...
 				  //every ship vector will contain 3 items
 				  //and their will be a total of 5 ships/cases within the switch
@@ -640,6 +665,8 @@ void Board::inputShipsFromFile()
 	if (inputFile.fail())
 	{
 		cerr << "\n\nERROR: UNABLE TO READ FILE\n\n";
+		quitGame();//quit if file is unread
+
 	}
 
 
@@ -728,6 +755,8 @@ void Board::placeShipsFromFile(vector<string> shipFromFile)
 			rowLocation -= 17;
 		}
 	}
+
+
 
 	//get shipLength based upon ship type
 	if (shipType == "CARRIER") shipLength = userCarrier1.getLength();
@@ -857,6 +886,7 @@ while (placed == false)
 					if (computerShipGrid[b][col] == water)
 					{
 						computerShipGrid[b][col] = ship;
+						
 						b++;
 						placed = true;
 						
@@ -936,6 +966,8 @@ void Board::fireUserComputerTorpedos()
 	cout << "Enter the location to fire a torpedo (ex: b4) \'q\' to quit : ";
 	cin >> location;
 
+
+
 	location = verifyLocationInput(location);
 	vectorLocation = changeLocationToInts(location);
 
@@ -944,15 +976,13 @@ void Board::fireUserComputerTorpedos()
 
 	if (computerShipGrid[torpRow][torpCol -1 ] == ship)
 	{
-		computerShipGrid[torpRow][torpCol - 1] = hit;
+		computerShipGrid[torpRow][torpCol - 1] = hit;			//pop_back() from ship's location vector
 	}
 
 	else if (computerShipGrid[torpRow][torpCol - 1] == water)
 	{
 		computerShipGrid[torpRow][torpCol - 1] = miss;
 	}
-
-	
 }//!void Board::fireUserComputerTorpedos()
 
 
@@ -978,6 +1008,15 @@ void Board::displayComputerGrid()
 		rowLetter++;
 	}//!output the grid
 }
+
+void Board::quitGame()
+{
+	//display grid with user's guesses
+	//display locations of computer's ships
+	cout << "\n\nTHANKS FOR PLAYING!!!\nGOODBYE\n";
+	
+	exit(0);
+}//!void Board::quitGame()
 
 Board::~Board()
 {
