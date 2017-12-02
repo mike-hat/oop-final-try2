@@ -83,15 +83,12 @@ public:
 	//verify the location input is between a-j, and 1-10
 	string verifyLocationInput(string _location);
 
+	//convert the row letter to an int
+	//output vector[0] = row; vector[1] = column
 	vector<int> changeLocationToInts(string _location);
-
 
 	//verify the orientation input is 'v' or 'h'
 	char verifyOrientationInput(char _orientation);
-
-
-	//display grid
-	void displayGrid();
 
 	//test if ships can be placed where requested
 	bool placeable(vector<int> location, int shipLength, char orientation);
@@ -105,6 +102,10 @@ public:
 	//initialize the computerShip vectors
 	void initCompShips();
 
+	//return the proper location vector based on the ship's name
+	//for computer's ships
+	vector<string> getComputerLocationShip(vector<string> computerShip);
+
 	//place the computer's ships in random non-overlapping locations within the game board
 	void randomlyPlaceComputerShips(vector<string> shipFromComputer);
 
@@ -114,13 +115,18 @@ public:
 
 	//prompt user to fire a torpedo at the computerShipGrid
 	//indicate hits and misses
-	void fireUserComputerTorpedos();
+	void fireUserTorpedos();
 
 	//quit function
 	//qame ends if user enters 'q' while placing torpedoes
+	//also called if game is won/lost
 	void quitGame();
 
 
+	//display user grid
+	void displayUserGrid();
+
+	//display computer grid
 	void displayComputerGrid();
 	~Board();
 };

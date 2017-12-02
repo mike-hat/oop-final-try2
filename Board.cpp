@@ -343,7 +343,7 @@ void Board::verticalShipPlacementForLoop(vector<int> location, char orientation,
 			k++;
 		}
 	}
-	displayGrid();
+	displayUserGrid();
 	
 }//!void Board::verticalShipPlacementForLoop(int startCol)
 
@@ -575,7 +575,7 @@ char Board::verifyOrientationInput(char _orientation)
  
 
 //display grid as grid[rows][columns]
-void Board::displayGrid()
+void Board::displayUserGrid()
 {
 	char rowLetter = 'A';//used to display the row letter
 
@@ -800,7 +800,7 @@ void Board::placeShipsFromFile(vector<string> shipFromFile)
 			k++;
 		}
 	}
-	displayGrid();
+	displayUserGrid();
 	cout << "\n\nend of verticalShipPlacementForLoop()\n\n";
 
 }//!void Board::placeShipsFromFile(vector<int> shipVec)
@@ -831,41 +831,66 @@ void Board::initCompShips()
 	computerDestroyer.push_back("2");
 }
 
+//return the proper location vector based on the ship's name
+//for computer's ships
+vector<string> Board::getComputerLocationShip(vector<string> computerShip)
+{
+	string shipType = computerShip[0];
 
+	//convert shipType to uppercase
+	//by coverting each letter in it to c_string, then that to uppercase
+	for (int i = 0; i < shipType.length(); i++)
+	{
+		shipType[i] = toupper(shipType.c_str()[i]);
+	}
 
+	//return computerShip's location vector based upon ship type
+	if (shipType == "CARRIER") return computerCarrierLocation;
+	else if (shipType == "BATTLESHIP") return computerBattleshipLocation;
+	else if (shipType == "CRUISER") return computerCruiserLocation;
+	else if (shipType == "SUBMARINE") return computerSubmarineLocation;
+	else if (shipType == "DESTROYER") return computerDestroyerLocation;
+	else cout << "Unrecognized ship tye\n\n";
+}
 
+/*
+the 5 computer ship vectors are organized as follows:
+
+ship[0] = ship name 
+ship[1] = ship length
+ship[2] = ship location
+ship[3] = ship orientation
+*/
 void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
 {
-	//while place = false
+	//while placed = false
 	//loop through the area the ship will go
 	//if grid at each element = water, placed = true
-	//else, place = false; return, get new values
+	//else, placed = false; return, get new values
 	//if ship falls off board, placed = false; return, get new values
-	//else, place = true
+	//else, placed = true
 	
+	//vector to keep track computer's ship coordinates on the board
+	vector<string> locationVector = getComputerLocationShip(shipFromComputer);
 	bool placed = false;
-	bool pass = false;
 	string location;
 	int row, col, shipLength, orientation;
+
 	shipLength = shipFromComputer[1].c_str()[0] - '0';
 
-
-	//srand(time(NULL));//seed rand()
-
+//place the computer's ships on the board
 while (placed == false)
 	{
-		row = rand() % 10;//these need to be between 0-9
-		col = rand() % 10;//to fit in the 10x10 computerShipGrid board
-		location = to_string(row);//set location to the row string
-		location += to_string(col);//set location to row+col string
+		row = rand() % 10;//these need to be between 0-9...
+		col = rand() % 10;//...to fit within the 10x10 computerShipGrid board
 
-		int a = col, b = row;
+		int a = col, b = row;//used in for loops
+
+
 
 		orientation = rand() % 2;//vertical = 1, horizontal = 2
 
-		
-
-		//if shipLength + row or col > 9, placebale = false
+		//if shipLength + row or col > 10, placebale = false
 		if (((shipLength + row) > 10))
 		{
 			placed = false;
@@ -878,16 +903,19 @@ while (placed == false)
 			continue;
 		}
 
-		else if (orientation == 1)				//vertical
+		else if (orientation == 1)				//vertical orientation
 		{
-			//if computerShipGrid[row][col]
-			//for (row; row < 10; row++)
-			//{
+
 				for (int i = 0; i < shipLength; i++)
 				{
 					if (computerShipGrid[b][col] == water)
 					{
-						computerShipGrid[b][col] = ship;
+						computerShipGrid[b][col] = ship;//set ship on board
+
+						//push_back ship's coordinates on the board in the locationVector
+						location = to_string(b);//set location to the row string
+						location += to_string(a);//set location to row+col string
+						locationVector.push_back(location);
 						
 						b++;
 						placed = true;
@@ -898,20 +926,21 @@ while (placed == false)
 						placed = false;
 					}//!else
 				}//!for (col; col < 9; col++)
-			//}//!for (row; row < 9; row++)
 		}//!if (orientation == 1)
 
 
-		else if (orientation == 0)				//horizontal
+		else if (orientation == 0)				//horizontal orientation
 		{
-			//if computerShipGrid[row][col]
-			//for (row; row < 10; row++)
-			//{
 				for (int i = 0; i < shipLength; i++)
 				{
 					if (computerShipGrid[row][a] == water)
 					{
-						computerShipGrid[row][a] = ship;
+						computerShipGrid[row][a] = ship;//set ship on board
+
+						//push_back ship's coordinates on the board in the locationVector
+						location = to_string(b);//set location to the row string
+						location += to_string(a);//set location to row+col string
+						locationVector.push_back(location);
 						a++;
 						placed = true;
 						
@@ -922,14 +951,11 @@ while (placed == false)
 						
 					}//!else
 				}//!for (col; col < 9; col++)
-			//}//!for (row; row < 9; row++)
 		}//!if (orientation == 2)
 
 		else placed = false;
 	}//!while (placed == false)
 
-
-	cout << endl;
 
 }//!void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
 
@@ -959,9 +985,10 @@ void Board::fireComputerTorpedoes()
 
 
 
-void Board::fireUserComputerTorpedos()
+void Board::fireUserTorpedos()
 {
-	vector<int> vectorLocation;
+	vector<int> torpedoVector;
+	vector<string> hitsVector;
 	int torpRow, torpCol; //1 torpedo = torpRow & torpCol
 	string location;
 
@@ -971,10 +998,10 @@ void Board::fireUserComputerTorpedos()
 
 
 	location = verifyLocationInput(location);
-	vectorLocation = changeLocationToInts(location);
+	torpedoVector = changeLocationToInts(location);
 
-	torpRow = vectorLocation[0];
-	torpCol = vectorLocation[1];
+	torpRow = torpedoVector[0];
+	torpCol = torpedoVector[1];
 
 	if (computerShipGrid[torpRow][torpCol -1 ] == ship)
 	{

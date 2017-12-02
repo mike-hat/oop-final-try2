@@ -3,10 +3,10 @@
 
 int main()
 {
-	srand(time(0));
+	srand(time(0));//seed random for the entire program
 
 	Board board;
-	board.displayGrid();
+	board.displayUserGrid();
 	//board.placeUserShips();
 	////board.displayGrid();
 	board.inputShipsFromFile();
@@ -25,15 +25,15 @@ int main()
 	board.fireComputerTorpedoes();
 	board.fireComputerTorpedoes();
 	board.fireComputerTorpedoes();
-	board.displayGrid();
+	board.displayUserGrid();
 
-	board.fireUserComputerTorpedos();
+	board.fireUserTorpedos();
 	board.displayComputerGrid();
-	board.fireUserComputerTorpedos();
+	board.fireUserTorpedos();
 	board.displayComputerGrid();
-	board.fireUserComputerTorpedos();
+	board.fireUserTorpedos();
 	board.displayComputerGrid();
-	board.fireUserComputerTorpedos();
+	board.fireUserTorpedos();
 	board.displayComputerGrid();
 	
 
