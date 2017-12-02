@@ -833,7 +833,7 @@ void Board::initCompShips()
 
 //return the proper location vector based on the ship's name
 //for computer's ships
-vector<string> Board::getComputerLocationShip(vector<string> computerShip)
+vector<string> Board::getComputerLocationVector(vector<string> computerShip)
 {
 	string shipType = computerShip[0];
 
@@ -871,12 +871,18 @@ void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
 	//else, placed = true
 	
 	//vector to keep track computer's ship coordinates on the board
-	vector<string> locationVector = getComputerLocationShip(shipFromComputer);
+	vector<string> locationVector = getComputerLocationVector(shipFromComputer);
 	bool placed = false;
-	string location;
+	string location, shipType = shipFromComputer[0];
 	int row, col, shipLength, orientation;
 
 	shipLength = shipFromComputer[1].c_str()[0] - '0';
+
+
+
+
+
+
 
 //place the computer's ships on the board
 while (placed == false)
@@ -916,6 +922,10 @@ while (placed == false)
 						location = to_string(b);//set location to the row string
 						location += to_string(a);//set location to row+col string
 						locationVector.push_back(location);
+						/*
+						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+						this doesn't push_back() the location vectors
+						*/
 						
 						b++;
 						placed = true;
@@ -931,30 +941,81 @@ while (placed == false)
 
 		else if (orientation == 0)				//horizontal orientation
 		{
-				for (int i = 0; i < shipLength; i++)
+			for (int i = 0; i < shipLength; i++)
+			{
+				if (computerShipGrid[row][a] == water)
 				{
-					if (computerShipGrid[row][a] == water)
-					{
-						computerShipGrid[row][a] = ship;//set ship on board
+					computerShipGrid[row][a] = ship;//set ship on board
 
-						//push_back ship's coordinates on the board in the locationVector
-						location = to_string(b);//set location to the row string
-						location += to_string(a);//set location to row+col string
-						locationVector.push_back(location);
-						a++;
-						placed = true;
-						
-					}//!if(computerShipGrid[row][col] == water)
-					else
-					{
-						placed = false;
-						
-					}//!else
-				}//!for (col; col < 9; col++)
+					//push_back ship's coordinates on the board in the locationVector
+					location = to_string(b);//set location to the row string
+					location += to_string(a);//set location to row+col string
+					locationVector.push_back(location);
+					a++;
+					placed = true;
+
+				}//!if(computerShipGrid[row][col] == water)
+				else
+				{
+					placed = false;
+
+				}//!else
+			}//!for (col; col < 9; col++)
 		}//!if (orientation == 2)
 
 		else placed = false;
 	}//!while (placed == false)
+
+
+	 //convert shipType to uppercase
+	 //by coverting each letter in it to c_string, then that to uppercase
+for (int i = 0; i < shipType.length(); i++)
+{
+	shipType[i] = toupper(shipType.c_str()[i]);
+}
+
+//return computerShip's location vector based upon ship type
+if (shipType == "CARRIER") 
+{
+	for (int i = 0; i < locationVector.size(); i++)
+	{
+		computerCarrierLocation.push_back(locationVector[i]);
+	}
+}
+
+else if (shipType == "BATTLESHIP") 
+{
+	for (int i = 0; i < locationVector.size(); i++)
+	{
+		computerBattleshipLocation.push_back(locationVector[i]);
+	}
+}
+
+else if (shipType == "CRUISER")
+{
+	for (int i = 0; i < locationVector.size(); i++)
+	{
+		computerCruiserLocation.push_back(locationVector[i]);
+	}
+}
+
+else if (shipType == "SUBMARINE")
+{
+	for (int i = 0; i < locationVector.size(); i++)
+	{
+		computerSubmarineLocation.push_back(locationVector[i]);
+	}
+}
+
+else if (shipType == "DESTROYER")
+{
+	for (int i = 0; i < locationVector.size(); i++)
+	{
+		computerDestroyerLocation.push_back(locationVector[i]);
+	}
+}
+
+else cout << "Unrecognized ship tye\n\n";
 
 
 }//!void Board::randomlyPlaceComputerShips(vector<string> shipFromComputer)
@@ -967,15 +1028,15 @@ void Board::fireComputerTorpedoes()
 	torpRow = rand() % 10;
 	torpCol = rand() % 10;
 
-		if (userShipGrid[torpRow][torpCol] == ship)
-		{
-			userShipGrid[torpRow][torpCol] = hit;
-		}
+	if (userShipGrid[torpRow][torpCol] == ship)
+	{
+		userShipGrid[torpRow][torpCol] = hit;
+	}
 
-		else if (userShipGrid[torpRow][torpCol] == water)
-		{
-			userShipGrid[torpRow][torpCol] = miss;
-		}
+	else if (userShipGrid[torpRow][torpCol] == water)
+	{
+		userShipGrid[torpRow][torpCol] = miss;
+	}
 
 	else fireComputerTorpedoes();
 
@@ -1003,9 +1064,13 @@ void Board::fireUserTorpedos()
 	torpRow = torpedoVector[0];
 	torpCol = torpedoVector[1];
 
-	if (computerShipGrid[torpRow][torpCol -1 ] == ship)
+	if (computerShipGrid[torpRow][torpCol - 1] == ship)
 	{
-		computerShipGrid[torpRow][torpCol - 1] = hit;			//pop_back() from ship's location vector
+		cout << "fffffffffff";
+		computerShipGrid[torpRow][torpCol - 1] = hit;//mark the grid as a hit
+		hitsVector.push_back(location);
+		trackTorpsThatHitComputer(hitsVector);//track which ship was hit and pop_back() from its location
+		cout << "gggggggggggg" << endl << endl;
 	}
 
 	else if (computerShipGrid[torpRow][torpCol - 1] == water)
@@ -1013,6 +1078,56 @@ void Board::fireUserTorpedos()
 		computerShipGrid[torpRow][torpCol - 1] = miss;
 	}
 }//!void Board::fireUserComputerTorpedos()
+
+
+
+//compare if a hit occurs where a computer ship is located
+void Board::trackTorpsThatHitComputer(vector<string> hitsVector)
+{
+	for (int i = 0; i < computerCarrierLocation.size(); i++)
+	{
+		cout << "\n\ncompCarrierLoc[i] = " << computerCarrierLocation[i] << endl;
+	}
+
+	for (int i = 0; i < hitsVector.size(); i++)
+	{
+		cout << "\n\nhitsVector[i] = " << hitsVector[i] << endl;
+	}
+
+
+
+	for (int i = 0; i < hitsVector.size(); i++)
+	{
+		if (hitsVector[i] == computerCarrierLocation[i])
+		{
+			cout << "\n\nYou hit the computer's carrier!\n\n";
+			computerCarrierLocation.pop_back();
+		}
+		else if (hitsVector[i] == computerBattleshipLocation[i])
+		{
+			cout << "\n\nYou hit the computer's battleship!\n\n";
+			computerBattleshipLocation.pop_back();
+		}
+		else if (hitsVector[i] == computerCruiserLocation[i])
+		{
+			cout << "\n\nYou hit the computer's cruiser!\n\n";
+			computerCruiserLocation.pop_back();
+		}
+		else if (hitsVector[i] == computerSubmarineLocation[i])
+		{
+			cout << "\n\nYou hit the computer's submarine!\n\n";
+			computerSubmarineLocation.pop_back();
+		}
+		else if (hitsVector[i] == computerDestroyerLocation[i])
+		{
+			cout << "\n\nYou hit the computer's carrier!\n\n";
+			computerDestroyerLocation.pop_back();
+		}
+	}
+}//!void Board::trackTorpsThatHitComputer(vector<string> hitsVector)
+
+
+
 
 
 void Board::displayComputerGrid()

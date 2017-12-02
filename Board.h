@@ -104,7 +104,7 @@ public:
 
 	//return the proper location vector based on the ship's name
 	//for computer's ships
-	vector<string> getComputerLocationShip(vector<string> computerShip);
+	vector<string> getComputerLocationVector(vector<string> computerShip);
 
 	//place the computer's ships in random non-overlapping locations within the game board
 	void randomlyPlaceComputerShips(vector<string> shipFromComputer);
@@ -116,6 +116,10 @@ public:
 	//prompt user to fire a torpedo at the computerShipGrid
 	//indicate hits and misses
 	void fireUserTorpedos();
+
+	//track hits against computer ships
+	//output if a ship is sunk
+	void trackTorpsThatHitComputer(vector<string> hitsVector);
 
 	//quit function
 	//qame ends if user enters 'q' while placing torpedoes

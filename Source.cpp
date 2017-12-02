@@ -10,6 +10,9 @@ int main()
 	//board.placeUserShips();
 	////board.displayGrid();
 	board.inputShipsFromFile();
+
+
+
 	board.fireComputerTorpedoes();
 	board.fireComputerTorpedoes();
 	board.fireComputerTorpedoes();
@@ -26,6 +29,9 @@ int main()
 	board.fireComputerTorpedoes();
 	board.fireComputerTorpedoes();
 	board.displayUserGrid();
+
+	cout << endl << endl;
+	board.displayComputerGrid();
 
 	board.fireUserTorpedos();
 	board.displayComputerGrid();
